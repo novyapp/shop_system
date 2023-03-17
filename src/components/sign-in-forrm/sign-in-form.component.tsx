@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   createUserDocumentFromAuth,
   SignInAuthUserWithEmailAndPassword,
@@ -22,15 +22,15 @@ export default function SignInForm() {
     setFormFields(defaultFormFields);
   };
 
+  const signInWithGoogle = async () => {
+    await signInWithGooglePopup();
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await SignInAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      console.log(response);
+      await SignInAuthUserWithEmailAndPassword(email, password);
 
       reserFormFields();
     } catch (error) {
@@ -51,11 +51,6 @@ export default function SignInForm() {
     const { name, value } = e.target;
 
     setFormFields({ ...formFields, [name]: value });
-  };
-
-  const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
   };
 
   return (
