@@ -5,7 +5,15 @@ import {
   CategoryTitle,
 } from "./category-preview.styles";
 
-export default function CategoryPreview({ title, products }) {
+import { CategoryItem } from "../../store/categories/category.types";
+import { FC } from "react";
+
+type CategoryPreviewProps = {
+  title: string;
+  products: CategoryItem[];
+};
+
+const CategoryPreview: FC<CategoryPreviewProps> = ({ title, products }) => {
   return (
     <CategoryPreviewContainer>
       <h2>
@@ -20,4 +28,6 @@ export default function CategoryPreview({ title, products }) {
       </CategoryPreviews>
     </CategoryPreviewContainer>
   );
-}
+};
+
+export default CategoryPreview;

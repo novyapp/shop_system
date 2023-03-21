@@ -8,8 +8,14 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../../store/cart/cart.action";
 import { selectCartItems } from "../../store/cart/cart.selector";
+import { CategoryItem } from "../../store/categories/category.types";
+import { FC } from "react";
 
-export default function ProductCard({ product }) {
+type ProductCardProps = {
+  product: CategoryItem;
+};
+
+const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
 
@@ -32,4 +38,6 @@ export default function ProductCard({ product }) {
       </Button>
     </ProductCartContainer>
   );
-}
+};
+
+export default ProductCard;

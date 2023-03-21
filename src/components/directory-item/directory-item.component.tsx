@@ -5,7 +5,14 @@ import {
   DirectoryItemContainer,
 } from "./directory-item.styles";
 
-export default function DirectoryItem({ category }) {
+import { DirectoryCategory } from "../directory/directory.component";
+import { FC } from "react";
+
+type DirectoryItemProps = {
+  category: DirectoryCategory;
+};
+
+const DirectoryItem: FC<DirectoryItemProps> = ({ category }) => {
   const navigate = useNavigate();
   const { imageUrl, title, route } = category;
 
@@ -20,4 +27,6 @@ export default function DirectoryItem({ category }) {
       </Body>
     </DirectoryItemContainer>
   );
-}
+};
+
+export default DirectoryItem;

@@ -16,7 +16,14 @@ import {
 } from "../../store/cart/cart.action";
 import { selectCartItems } from "../../store/cart/cart.selector";
 
-export default function CheckoutItem({ cartItem }) {
+import { CartItem } from "../../store/cart/cart.types";
+import { FC } from "react";
+
+type CheckoutItemProps = {
+  cartItem: CartItem;
+};
+
+const CheckoutItem: FC<CheckoutItemProps> = ({ cartItem }) => {
   const { name, imageUrl, price, quantity } = cartItem;
 
   const cartItems = useSelector(selectCartItems);
@@ -43,4 +50,6 @@ export default function CheckoutItem({ cartItem }) {
       <RemoveButton onClick={clearItemHandler}>&#10005;</RemoveButton>
     </CheckoutItemContainer>
   );
-}
+};
+
+export default CheckoutItem;
