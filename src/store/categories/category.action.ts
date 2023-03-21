@@ -1,25 +1,44 @@
 import { getCategoriesAndDocuments } from "../../utils/firebase/firebase.utils";
-import { createAction } from "../../utils/reducer/reducer.utils";
-import { CATEGORIES_ACTION_TYPES } from "./category.types";
+import {
+  createAction,
+  Action,
+  ActionWithPayload,
+  withMatcher,
+} from "../../utils/reducer/reducer.utils";
+import { CATEGORIES_ACTION_TYPES, Category } from "./category.types";
 
-export const fetchCategoriesStart = () =>
-  createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START);
+export type FetchCategoriesStart =
+  Action<CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START>;
 
-export const fetchCategoriesSuccess = (categoriesArray) =>
-  createAction(
-    CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS,
-    categoriesArray
-  );
+export type FetchCategoriesSuccess = ActionWithPayload<
+  CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS,
+  Category[]
+>;
 
-export const fetchCategoriesFailure = (error) =>
-  createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED, error);
+export type FetchCategoriesFailure = ActionWithPayload<
+  CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED,
+  Error
+>;
 
-export const fetchCategoriesAsync = () => async (dispatch) => {
-  dispatch(fetchCategoriesStart());
-  try {
-    const categoriesArray = await getCategoriesAndDocuments("categories");
-    dispatch(fetchCategoriesSuccess(categoriesArray));
-  } catch (error) {
-    dispatch(fetchCategoriesFailure(error));
-  }
-};
+export type CategoryAction =
+  | FetchCategoriesStart
+  | FetchCategoriesSuccess
+  | FetchCategoriesFailure;
+
+export const fetchCategoriesStart = withMatcher(
+  (): FetchCategoriesStart =>
+    createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START)
+);
+
+export const fetchCategoriesSuccess = withMatcher(
+  (categoriesArray: Category[]): FetchCategoriesSuccess =>
+    createAction(
+      CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS,
+      categoriesArray
+    )
+);
+
+export const fetchCategoriesFailure = withMatcher(
+  (error: Error): FetchCategoriesFailure =>
+    createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED, error)
+);
